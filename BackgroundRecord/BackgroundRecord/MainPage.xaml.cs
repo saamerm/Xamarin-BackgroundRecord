@@ -14,17 +14,24 @@ namespace BackgroundRecord
         {
             InitializeComponent();
         }
+        IAudioRecordingService _mediaService;
 
         void Record_Button_Clicked(Object sender, EventArgs e)
         {
-            var appReviewer = DependencyService.Get<IAudioRecordingService>();
-            appReviewer.Record();
+            _mediaService = DependencyService.Get<IAudioRecordingService>();
+            _mediaService.Record();
         }
 
         void Stop_Button_Clicked(Object sender, EventArgs e)
         {
-            var appReviewer = DependencyService.Get<IAudioRecordingService>();
-            appReviewer.Stop();
+            _mediaService = DependencyService.Get<IAudioRecordingService>();
+            _mediaService.Stop();
+        }
+
+        void Play_Button_Clicked(Object sender, EventArgs e)
+        {
+            _mediaService = DependencyService.Get<IAudioRecordingService>();
+            _mediaService.Play();
         }
     }
 }

@@ -21,6 +21,7 @@
         </Label>
         <Button Text="Record" Clicked="Record_Button_Clicked"/>
         <Button Text="Stop" Clicked="Stop_Button_Clicked"/>
+        <Button Text="Play" Clicked="Play_Button_Clicked"/>
     </StackLayout>
 
 </ContentPage>

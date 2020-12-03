@@ -44,7 +44,22 @@ namespace BackgroundRecord.Droid
             {
                 System.Console.WriteLine(ex.Message);
             }
+        }
 
+        MediaPlayer _mediaPlayer;
+        public void Play()
+        {
+            try
+            {
+                _mediaPlayer = new MediaPlayer();
+                _mediaPlayer.SetDataSource(GetFileName());
+                _mediaPlayer.Prepare();
+                _mediaPlayer.Start();
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
         }
 
         private string GetFileName()

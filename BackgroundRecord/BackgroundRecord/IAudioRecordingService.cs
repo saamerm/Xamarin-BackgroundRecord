@@ -5,5 +5,6 @@ namespace BackgroundRecord
     {
         void Record();
         void Stop();
+        void Play();
     }
 }
