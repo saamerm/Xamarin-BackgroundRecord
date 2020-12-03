@@ -1,14 +1,13 @@
 ﻿using Android;
 using Android.App;
-using Android.Content;
 using Android.Media;
 using Android.OS;
 using Java.IO;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BackgroundRecord.Droid.AudioRecordingService))]
-[assembly: UsesPermission(Android.Manifest.Permission.RecordAudio)]
-[assembly: UsesPermission(Android.Manifest.Permission.ReadExternalStorage)]
-[assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
+[assembly: UsesPermission(Manifest.Permission.RecordAudio)]
+[assembly: UsesPermission(Manifest.Permission.ReadExternalStorage)]
+[assembly: UsesPermission(Manifest.Permission.WriteExternalStorage)]
 namespace BackgroundRecord.Droid
 {
     public class AudioRecordingService : IAudioRecordingService
@@ -17,49 +16,28 @@ namespace BackgroundRecord.Droid
         public void Record()
         {
             CheckForPermissions();
-            try
-            {
-                _mediaRecorder = new MediaRecorder();
-                _mediaRecorder.Reset();
-                _mediaRecorder.SetAudioSource(AudioSource.Mic);
-                _mediaRecorder.SetOutputFormat(OutputFormat.Mpeg2Ts);
-                _mediaRecorder.SetOutputFile(GetFileName());
-                _mediaRecorder.SetAudioEncoder(AudioEncoder.Aac);
-                _mediaRecorder.Prepare();
-                _mediaRecorder.Start();
-            }
-            catch (System.Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-            }
+            _mediaRecorder = new MediaRecorder();
+            _mediaRecorder.Reset();
+            _mediaRecorder.SetAudioSource(AudioSource.Mic);
+            _mediaRecorder.SetOutputFormat(OutputFormat.Mpeg2Ts);
+            _mediaRecorder.SetOutputFile(GetFileName());
+            _mediaRecorder.SetAudioEncoder(AudioEncoder.Aac);
+            _mediaRecorder.Prepare();
+            _mediaRecorder.Start();
         }
 
         public void Stop()
         {
-            try
-            {
-                _mediaRecorder.Stop();
-            }
-            catch (System.Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-            }
+            _mediaRecorder.Stop();
         }
 
         MediaPlayer _mediaPlayer;
         public void Play()
         {
-            try
-            {
-                _mediaPlayer = new MediaPlayer();
-                _mediaPlayer.SetDataSource(GetFileName());
-                _mediaPlayer.Prepare();
-                _mediaPlayer.Start();
-            }
-            catch (System.Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-            }
+            _mediaPlayer = new MediaPlayer();
+            _mediaPlayer.SetDataSource(GetFileName());
+            _mediaPlayer.Prepare();
+            _mediaPlayer.Start();
         }
 
         private string GetFileName()
@@ -71,6 +49,7 @@ namespace BackgroundRecord.Droid
             var myfile = path + "filename.3gp";
             return myfile;
         }
+
         private void CheckForPermissions()
         {
             if (!(MainActivity.Instance.CheckSelfPermission(Manifest.Permission.RecordAudio) == Android.Content.PM.Permission.Granted &&
@@ -79,7 +58,6 @@ namespace BackgroundRecord.Droid
             {
                 MainActivity.Instance.RequestPermissions(new string[] { Manifest.Permission.RecordAudio, Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage }, 1);
             }
-
         }
     }
 }
