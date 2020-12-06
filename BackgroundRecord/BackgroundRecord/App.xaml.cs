@@ -10,7 +10,9 @@ namespace BackgroundRecord
         {
             InitializeComponent();
 
-            MainPage = new VideoPage();
+            //MainPage = new VideoPage();
+            //MainPage = new AudioPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

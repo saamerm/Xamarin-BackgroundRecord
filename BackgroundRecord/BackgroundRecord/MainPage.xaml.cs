@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -10,28 +11,27 @@ namespace BackgroundRecord
 {
     public partial class MainPage : ContentPage
     {
+        static int counter;
         public MainPage()
         {
             InitializeComponent();
         }
-        IAudioRecordingService _mediaService;
 
-        void Record_Button_Clicked(Object sender, EventArgs e)
+        protected override void OnAppearing()
         {
-            _mediaService = DependencyService.Get<IAudioRecordingService>();
-            _mediaService.Record();
+            base.OnAppearing();
+            NewPageButton.Clicked += Button_Clicked;
         }
 
-        void Stop_Button_Clicked(Object sender, EventArgs e)
+        protected override void OnDisappearing()
         {
-            _mediaService = DependencyService.Get<IAudioRecordingService>();
-            _mediaService.Stop();
+            base.OnDisappearing();
+            NewPageButton.Clicked -= Button_Clicked;
         }
-
-        void Play_Button_Clicked(Object sender, EventArgs e)
+        void Button_Clicked(System.Object sender, System.EventArgs e)
         {
-            _mediaService = DependencyService.Get<IAudioRecordingService>();
-            _mediaService.Play();
+            Console.WriteLine("asd");
+            Navigation.PushAsync(new VideoPage());
         }
     }
 }
